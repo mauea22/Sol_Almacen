@@ -79,7 +79,6 @@
             this.Txt_descripcion_ar.ReadOnly = true;
             this.Txt_descripcion_ar.Size = new System.Drawing.Size(364, 20);
             this.Txt_descripcion_ar.TabIndex = 2;
-            
             // 
             // Txt_marca_ar
             // 
@@ -189,6 +188,7 @@
             this.Btn_guardar.Text = "Guardar";
             this.Btn_guardar.UseVisualStyleBackColor = true;
             this.Btn_guardar.Visible = false;
+            this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
             // Btn_nuevo
             // 

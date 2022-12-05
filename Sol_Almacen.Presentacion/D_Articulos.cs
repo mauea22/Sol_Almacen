@@ -52,5 +52,52 @@ namespace Sol_Almacen.Presentacion
                 if (SqlCon.State == ConnectionState.Open) { SqlCon.Close(); }
             }
         }
+
+        public string Guardar_ar(int nOpcion, P_articulos oAr )
+        {
+            string rPta = "";
+            string sqlTarea = "";
+            MySqlConnection SqlCon = new MySqlConnection();
+
+            try
+            {
+                SqlCon = Conexion.getInstancia().CrearConexion();
+                if (nOpcion == 1) //nuevo registro
+                {
+                    sqlTarea = " insert into tb_articulos(descripcion_ar," +
+                                                         "marca_ar," +
+                                                         "codigo_um," +
+                                                         "codico_ca," +
+                                                         "stock_actual," +
+                                                         "fechaCrea_ar, " +
+                                                         "fechaModifica_ar, " +
+                                                 "values('"+oAr.Descripcion_ar+"', " + 
+                                                        "'"+oAr.Marca_ar+"', " +
+                                                        "'"+oAr.Codigo_um+"', " +
+                                                        "'"+oAr.Codigo_ca+"', " +
+                                                        "'"+oAr.stock_actual+"', "+ 
+                                                        "'"+oAr.FechaCrea_ar+"', "+
+                                                        "'"+oAr.FechaModifica_ar+"', "+ ")";
+                }
+                else
+                {
+                    //actualizar registro
+                }
+                MySqlCommand Comando = new MySqlCommand( sqlTarea, SqlCon);
+                SqlCon.Open();
+                rPta = Comando.ExecuteNonQuery() >= 1 ? "Ok" : "No se pudo ingreasar el registro";
+            }
+            catch (Exception ex)
+            {
+
+                rPta = ex.Message;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) { SqlCon.Close(); }
+            }
+
+            return rPta;
+        }
     }
 }

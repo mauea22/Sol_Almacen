@@ -16,6 +16,10 @@ namespace Sol_Almacen.Presentacion
         {
             InitializeComponent();
         }
+        #region "mis variables"
+        int nCodigo_ar = 0;
+        int nEstadoGuarda = 0;
+        #endregion
 
         #region "mis metodos"
         private void Formato_ar()
@@ -49,7 +53,6 @@ namespace Sol_Almacen.Presentacion
             Txt_marca_ar.ReadOnly = !lEstado;    
             Txt_stock_actual.ReadOnly = !lEstado;
         }
-
         private void Estado_botones_procesos( bool lEstado)
         {
             Btn_lupa_ca.Enabled = lEstado;
@@ -61,7 +64,6 @@ namespace Sol_Almacen.Presentacion
             //desactivar Dgv
             Dgv_articulos.Enabled = !lEstado;
         }
-
         private void Estado_botones_principales( bool lEstado)
         {
             Btn_nuevo.Enabled = lEstado;
@@ -69,6 +71,14 @@ namespace Sol_Almacen.Presentacion
             Btn_eliminar.Enabled = lEstado; 
             Btn_reporte.Enabled = lEstado;
             Btn_salir.Enabled = lEstado;
+        }
+        private void Limpiar_input( bool lEstado)
+        {
+            Txt_descripcion_ar.Text = "";
+            Txt_descripcion_ca.Text = "";
+            Txt_descripcion_um.Text = "";
+            Txt_marca_ar.Text = "";
+            Txt_stock_actual.Text = "";
         }
 
         #endregion
@@ -80,9 +90,11 @@ namespace Sol_Almacen.Presentacion
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
+            nEstadoGuarda = 1; //nuevo registro
             this.Estado_input(true);
             this.Estado_botones_procesos(true);
             this.Estado_botones_principales(false);
+            this.Limpiar_input(true);
 
             //foco en primer input
             this.Txt_descripcion_ar.Focus();
@@ -94,9 +106,25 @@ namespace Sol_Almacen.Presentacion
             this.Estado_botones_procesos(false);
             this.Estado_input(false);
             this.Estado_botones_principales(true);
+            this.Limpiar_input(true);
             Dgv_articulos.Enabled = false;
              
 
+        }
+
+        private void Btn_guardar_Click(object sender, EventArgs e)
+        
+        {
+            string rPta = "";
+            P_articulos oAr = new P_articulos();
+            oAr.Codigo_ar = nCodigo_ar;
+            oAr.Descripcion_ar = Txt_descripcion_ar.Text.Trim();
+            oAr.Marca_ar = Txt_marca_ar.Text.Trim();
+            oAr.Codigo_um = 1;
+            oAr.Codigo_ca = 1;
+            oAr.stock_actual = Convert.ToDecimal(Txt_stock_actual);
+            oAr.FechaCrea_ar = DateTime.Now.ToString("yyyy-mm-dd");
+            oAr.FechaModifica_ar = DateTime.Now.ToString("yyyyy-mm-dd");
         }
 
     }
