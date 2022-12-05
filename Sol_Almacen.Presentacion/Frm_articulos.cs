@@ -43,6 +43,34 @@ namespace Sol_Almacen.Presentacion
             Dgv_articulos.DataSource = Datos.Listado_ar(cTexto);
             this.Formato_ar();
         }
+        private void Estado_input( bool lEstado)
+        {
+            Txt_descripcion_ar.ReadOnly = !lEstado; 
+            Txt_marca_ar.ReadOnly = !lEstado;    
+            Txt_stock_actual.ReadOnly = !lEstado;
+        }
+
+        private void Estado_botones_procesos( bool lEstado)
+        {
+            Btn_lupa_ca.Enabled = lEstado;
+            Btn_lupa_um.Enabled = lEstado;
+
+            Btn_cancelar.Visible = lEstado;
+            Btn_guardar.Visible = lEstado;
+
+            //desactivar Dgv
+            Dgv_articulos.Enabled = !lEstado;
+        }
+
+        private void Estado_botones_principales( bool lEstado)
+        {
+            Btn_nuevo.Enabled = lEstado;
+            Btn_actualizar.Enabled = lEstado;
+            Btn_eliminar.Enabled = lEstado; 
+            Btn_reporte.Enabled = lEstado;
+            Btn_salir.Enabled = lEstado;
+        }
+
         #endregion
 
         private void Frm_articulos_Load(object sender, EventArgs e)
@@ -50,19 +78,26 @@ namespace Sol_Almacen.Presentacion
             this.Listado_ar("%");
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void Btn_nuevo_Click(object sender, EventArgs e)
         {
+            this.Estado_input(true);
+            this.Estado_botones_procesos(true);
+            this.Estado_botones_principales(false);
+
+            //foco en primer input
+            this.Txt_descripcion_ar.Focus();
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Btn_cancelar_Click(object sender, EventArgs e)
         {
+            this.Estado_botones_procesos(false);
+            this.Estado_input(false);
+            this.Estado_botones_principales(true);
+            Dgv_articulos.Enabled = false;
+             
 
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
